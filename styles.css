@@ -1,0 +1,98 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: poppins, sans-serif;
+    list-style: none;
+} 
+body{
+
+    background-color:aquamarine
+}
+h1{
+font-size: 5rem;
+color:rgb(0, 174, 255);
+text-align: center;
+margin-bottom: 30px;;
+}
+.container-search{
+border:1px solid grey;
+display: flex;
+justify-content:center;
+padding-top: 12px;
+padding-bottom: 12px;
+background-color:#ffffff6c;;
+margin: 25px;
+
+}
+.search{
+padding: 5px 150px;
+
+}
+    
+.button-search{
+    padding: 3px 30px;
+    background-color: rgb(0, 174, 255);
+    color: white;
+}
+footer{
+    text-align: center;
+    color:rgb(0, 174, 255);
+background-color:#16d6766c;;
+
+}
+img{
+width:200px;
+height:180px;
+
+}
+
+.card{
+    border: #16d6766c solid 1px;
+    padding:10px;
+    margin: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+.button-card{
+    padding: 2px 10px;
+    background-color: rgb(0, 174, 255);
+    color: white;
+}
+
+.container{
+  display: flex;
+  flex-direction: row; /* Coloca los hijos en fila (horizontalmente) */
+  /* Opcional:
+  justify-content: space-around; /* Distribuye el espacio entre las secciones */
+  align-items: flex-start; /* Alinea las secciones en la parte superior */
+
+}
+
+.container-items1{
+      display: flex; /* Convierte el div en un contenedor flex */
+  flex-direction: column; /* Asegura que los elementos hijos se dispongan en fila (horizontalmente) */
+  /* Opcional:
+  justify-content: space-around; /* Distribuye el espacio alrededor de las listas */
+  align-items: flex-start; /* Alinea las listas en la parte superior (por defecto) */
+  margin-left: 50px;;
+}
+.container-items2{
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+margin: 200px;
+ align-items: flex-start;
+
+
+}
+.ul-2{
+    display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  list-style-type: none;
+  padding: 0;
+  margin: 0; 
+}

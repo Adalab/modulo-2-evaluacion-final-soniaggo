@@ -26,10 +26,10 @@ for( let product of productsList){
     productListMust.appendChild(li);
 
 }
-
+const buttonAdd = document.querySelectorAll(".js_buttonAdd");
 
 };
-const buttonAdd = document.querySelectorAll(".js_buttonAdd");
+
 
 function rendercard (product, productListAddCard){
      const li = document.createElement("li");
@@ -72,9 +72,6 @@ fetch(url)
     productsList = data;
   
 renderProductsList(productsList,productListMust);
-rendercard(productscard,productListMust);
-
-
 
     });
 

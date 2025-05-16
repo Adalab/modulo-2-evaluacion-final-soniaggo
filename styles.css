@@ -61,9 +61,10 @@ height:50px;
     margin: 10px;
     border-radius: 10px;
     text-align: center;
+    align-items: center;
     font-size: 25px;
     width: 250px;
-    height:300px ;
+    height:330px ;
 }
 .button-card{
     padding: 2px 10px;

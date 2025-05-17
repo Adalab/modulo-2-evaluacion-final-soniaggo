@@ -86,14 +86,16 @@ height:50px;
   flex-direction: column; /* Asegura que los elementos hijos se dispongan en fila (horizontalmente) */
   /* Opcional:
   justify-content: space-around; /* Distribuye el espacio alrededor de las listas */
-  align-items: flex-start; /* Alinea las listas en la parte superior (por defecto) */
-  margin-left: 50px;;
+  /* align-items: flex-start; /* Alinea las listas en la parte superior (por defecto) */
+ margin-left: 20px;
+ flex-wrap:wrap ;
+
 }
 .container-items2{
 display: flex;
 flex-direction: row;
 flex-wrap: wrap;
-margin: 200px;
+margin: 20px;
  align-items: flex-start;
 
 
@@ -113,6 +115,6 @@ margin: 200px;
 
 }
 .add{
-    opacity:0.6%;
+    opacity:0.8;
     color: red;
 }

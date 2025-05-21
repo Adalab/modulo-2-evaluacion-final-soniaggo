@@ -88,20 +88,12 @@ function handleclicksearch(event) {
   event.preventDefault();
   let searchValue = inputSearch.value.toLowerCase();
 
-  // Si el input está vacío, mostrar todos los productos
-if (searchValue === "") {
-    
-    renderProductsList(productsList, productListMust);
-    return;
-  }
-
-
   let filteredProducts = productsList.filter(product => {
     return product.title.toLowerCase().includes(searchValue);
   });
   renderProductsList(filteredProducts, productListMust);
 }
-
+// recupera el carrito desde localStorage si habia elementos guardados en el
 const storedCart = localStorage.getItem("productsListcart");
 if (storedCart) {
   productscard = JSON.parse(storedCart);

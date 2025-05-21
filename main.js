@@ -1,125 +1,3 @@
-// 'use strict';
-// const productListMust = document.querySelector(".js_ul2");
-// const productListAddCard = document.querySelector(".js_ul1")
-// const buttonSearch = document.querySelector(".js_buttonsearch");
-// const inputSearch = document.querySelector(".js_searchinput");
-
-// const url = "https://fakestoreapi.com/products";
-
-// let productsList =[];
-// let productscard =[];
-
-
-
-
-
-
-// function renderProductsList(productsList , productListMust) {
-
-
-
-// for( let product of productsList){
-//     let id = product.id;
-//     const li = document.createElement("li");
-//     li.classList.add("card");
-//     li.innerHTML = `
-//      <img src="${product.image}" alt="${product.title}">
-//      <h4>${product.title}</h4>
-//      <p>Price: $${product.price}</p>
-//     <button class="js_buttonAdd button-card" id="${product.id}">Comprar</button>
-
-//    `;
-//     productListMust.appendChild(li)
-  
-   
-// }
-
-// };
-
-
-
-
-
-
-
-// function renderCart() {
-//   productListAddCard.innerHTML = "";
-
-//   for (let i = 0; i < productscard.length; i++) {
-//     const product = productscard[i];
-//     const li = document.createElement("li");
-//     li.classList.add("card", "add");
-//     li.innerHTML = `
-//       <img src="${product.image}" alt="${product.title}">
-//       <h4>${product.title}</h4>
-//       <p>Price: $${product.price}</p>
-//     `;
-//     productListAddCard.appendChild(li);
-//   }
-// }
-
-
-// function handleclicksearch(event){
-// event.preventDefault();
-// let searchValue = inputSearch.value.toLowerCase();
-// let filteredProducts = productsList.filter(product => {
-//     return product.title.toLowerCase().includes(searchValue);
-   
-//     } );
-//     productListMust.innerHTML='';
-//   renderProductsList(filteredProducts,productListMust);
-  
-  
-
-// };
-
-// function handleCardClick(event) {
-//   if (event.target.classList.contains("js_buttonAdd")) {
-//     const clickedId = parseInt(event.target.id);
-//     let found = false;
-
-//     // Comprobar si el producto ya está en el carrito
-//     for (let i = 0; i < productscard.length; i++) {
-//       if (productscard[i].id === clickedId) {
-//         // Si ya está, lo quitamos
-//         productscard.splice(i, 1);
-//         found = true;
-//         break;
-//       }
-//     }
-
-//     // Si no estaba, lo buscamos en la lista de productos y lo añadimos
-//     if (!found) {
-//       for (let i = 0; i < productsList.length; i++) {
-//         if (productsList[i].id === clickedId) {
-//           productscard.push(productsList[i]);
-//           break;
-//         }
-//       }
-//     }
-
-//     renderCart(); // Volvemos a pintar el carrito
-//   }
-// }
-
-
-
-
-
-
-// fetch(url)
-// .then (response => response.json())
-// .then(data => {
-//     console.log(data);
-//     productsList = data;
-  
-// renderProductsList(productsList,productListMust);
-
-//     });
-
-
-// buttonSearch.addEventListener("click" ,handleclicksearch);
-// productListMust.addEventListener("click", handleCardClick);
 
 "use strict";
 
@@ -134,7 +12,7 @@ const url = "https://fakestoreapi.com/products";
 let productsList = [];
 let productscard = []; // Aquí se almacenarán los productos del carrito
 
-// Función para renderizar los productos filtrados en la lista principal (derecha)
+// Función para pintar los productos filtrados en la lista principal (derecha)
 function renderProductsList(productsList, productListMust) {
   productListMust.innerHTML = ""; // Limpiar la lista de productos antes de renderizar
 
@@ -151,7 +29,7 @@ function renderProductsList(productsList, productListMust) {
   }
 }
 
-// Función para renderizar el carrito con los productos añadidos
+// Función para pintar el carrito con los productos añadidos
 function renderCart() {
   productListAddCard.innerHTML = ""; // Limpiar el carrito antes de renderizar
 
@@ -159,14 +37,24 @@ function renderCart() {
     const li = document.createElement("li");
     li.classList.add("card", "add");
     li.innerHTML = `
+     
       <img src="${product.image}">
       <h4>${product.title}</h4>
       <p>Price: $${product.price}</p>
-      <button class="js_buttonRemove button-card" id="remove-${product.id}">Eliminar</button>
+      <button class="js_buttonRemove button-card" id="remove-${product.id}">ELIMINAR</button>
     `;
     productListAddCard.appendChild(li);
+    localStorage.setItem("productsListcart", JSON.stringify(productscard));
+
   }
+if (productscard.length > 0) {
+  const li = document.createElement("li");
+  li.innerHTML = `<button class="js_buttonClearAll button-empty">Vaciar carrito</button>`;
+  productListAddCard.appendChild(li);
 }
+
+}
+
 
 // Función para manejar el clic en los botones de "Comprar" y "Eliminar"
 function handleCardClick(event) {
@@ -187,16 +75,37 @@ function handleCardClick(event) {
     productscard = productscard.filter(product => product.id !== clickedProduct.id); // Eliminar del carrito
     renderCart(); // Actualizar la vista del carrito
   }
+  if (event.target.classList.contains("js_buttonClearAll")) {
+  productscard = [];
+  renderCart();
+  localStorage.setItem("productsListcart", JSON.stringify(productscard));
+}
+
 }
 
 // Función para manejar la búsqueda de productos
 function handleclicksearch(event) {
   event.preventDefault();
   let searchValue = inputSearch.value.toLowerCase();
+
+  // Si el input está vacío, mostrar todos los productos
+if (searchValue === "") {
+    
+    renderProductsList(productsList, productListMust);
+    return;
+  }
+
+
   let filteredProducts = productsList.filter(product => {
     return product.title.toLowerCase().includes(searchValue);
   });
   renderProductsList(filteredProducts, productListMust);
+}
+
+const storedCart = localStorage.getItem("productsListcart");
+if (storedCart) {
+  productscard = JSON.parse(storedCart);
+  renderCart();
 }
 
 // Obtener los productos de la API
@@ -205,12 +114,14 @@ fetch(url)
   .then(data => {
     productsList = data;
     renderProductsList(productsList, productListMust);
+    localStorage.setItem("productsList", JSON.stringify(productsList));
+    localStorage.setItem("productsListcart", JSON.stringify(productscard));
+    console.log(localStorage)
   });
 
-// Añadir el evento de clic en el contenedor de productos para manejar el botón de "Comprar" y "Eliminar"
+
+
 productListMust.addEventListener("click", handleCardClick);
 productListAddCard.addEventListener("click", handleCardClick);
-
-// Añadir el evento de búsqueda
 buttonSearch.addEventListener("click", handleclicksearch);
 

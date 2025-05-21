@@ -3,14 +3,14 @@
 
 // Variables globales
 const productListMust = document.querySelector(".js_ul2");
-const productListAddCard = document.querySelector(".js_ul1");
+const productListAddCart = document.querySelector(".js_ul1");
 const buttonSearch = document.querySelector(".js_buttonsearch");
 const inputSearch = document.querySelector(".js_searchinput");
 
 const url = "https://fakestoreapi.com/products";
 
 let productsList = [];
-let productscard = []; // Aquí se almacenarán los productos del carrito
+let productscart = []; // Aquí se almacenarán los productos del carrito
 
 // Función para pintar los productos filtrados en la lista principal (derecha)
 function renderProductsList(productsList, productListMust) {
@@ -31,9 +31,9 @@ function renderProductsList(productsList, productListMust) {
 
 // Función para pintar el carrito con los productos añadidos
 function renderCart() {
-  productListAddCard.innerHTML = ""; // Limpiar el carrito antes de renderizar
+  productListAddCart.innerHTML = ""; // Limpiar el carrito antes de renderizar
 
-  for (let product of productscard) {
+  for (let product of productscart) {
     const li = document.createElement("li");
     li.classList.add("card", "add");
     li.innerHTML = `
@@ -43,14 +43,14 @@ function renderCart() {
       <p>Price: $${product.price}</p>
       <button class="js_buttonRemove button-card" id="remove-${product.id}">ELIMINAR</button>
     `;
-    productListAddCard.appendChild(li);
-    localStorage.setItem("productsListcart", JSON.stringify(productscard));
+    productListAddCart.appendChild(li);
+    localStorage.setItem("productsListcart", JSON.stringify(productscart));
 
   }
-if (productscard.length > 0) {
+if (productscart.length > 0) {
   const li = document.createElement("li");
   li.innerHTML = `<button class="js_buttonClearAll button-empty">Vaciar carrito</button>`;
-  productListAddCard.appendChild(li);
+  productListAddCart.appendChild(li);
 }
 
 }
@@ -64,21 +64,21 @@ function handleCardClick(event) {
   // Si el clic es en un botón de "Comprar"
   if (event.target.classList.contains("js_buttonAdd") && clickedProduct) {
     // Verificar si el producto ya está en el carrito
-    if (!productscard.some(product => product.id === clickedProduct.id)) {
-      productscard.push(clickedProduct); // Añadir al carrito
+    if (!productscart.some(product => product.id === clickedProduct.id)) {
+      productscart.push(clickedProduct); // Añadir al carrito
       renderCart(); // Actualizar la vista del carrito
     }
   }
 
   // Si el clic es en un botón de "Eliminar" en el carrito
   if (event.target.classList.contains("js_buttonRemove") && clickedProduct) {
-    productscard = productscard.filter(product => product.id !== clickedProduct.id); // Eliminar del carrito
+    productscart = productscart.filter(product => product.id !== clickedProduct.id); // Eliminar del carrito
     renderCart(); // Actualizar la vista del carrito
   }
   if (event.target.classList.contains("js_buttonClearAll")) {
-  productscard = [];
+  productscart = [];
   renderCart();
-  localStorage.setItem("productsListcart", JSON.stringify(productscard));
+  localStorage.setItem("productsListcart", JSON.stringify(productscart));
 }
 
 }
@@ -96,7 +96,7 @@ function handleclicksearch(event) {
 // recupera el carrito desde localStorage si habia elementos guardados en el
 const storedCart = localStorage.getItem("productsListcart");
 if (storedCart) {
-  productscard = JSON.parse(storedCart);
+  productscart = JSON.parse(storedCart);
   renderCart();
 }
 
@@ -107,13 +107,13 @@ fetch(url)
     productsList = data;
     renderProductsList(productsList, productListMust);
     localStorage.setItem("productsList", JSON.stringify(productsList));
-    localStorage.setItem("productsListcart", JSON.stringify(productscard));
+    localStorage.setItem("productsListcart", JSON.stringify(productscart));
     console.log(localStorage)
   });
 
 
 
 productListMust.addEventListener("click", handleCardClick);
-productListAddCard.addEventListener("click", handleCardClick);
+productListAddCart.addEventListener("click", handleCardClick);
 buttonSearch.addEventListener("click", handleclicksearch);
 
